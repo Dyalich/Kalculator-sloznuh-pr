@@ -1,0 +1,46 @@
+  TClclandpr = class(TForm)
+    Qute: TBitBtn;
+    Rachitat: TButton;
+    Spisocheck: TComboBox;
+    Vvod1: TEdit;
+    Vvod2: TEdit;
+    IMG: TImage;
+    IMG2: TImage;
+    Nadpic1: TLabel;
+    Nadpic2: TLabel;
+    Nadpic3: TLabel;
+    Vuvod: TLabel;
+    Panel: TPanel;
+    Prprocent: TRadioButton;
+    Clprocent: TRadioButton;
+    Group: TRadioGroup;
+    procedure QuteClick(Sender: TObject);
+    procedure RachitatClick(Sender: TObject);
+    procedure SpisocheckKeyPress(Sender: TObject; var Key: char);
+    procedure Vvod1KeyPress(Sender: TObject; var Key: char);
+    procedure Vvod2KeyPress(Sender: TObject; var Key: char);
+    procedure Label1Click(Sender: TObject);
+
+procedure TClclandpr.RachitatClick(Sender: TObject);
+var
+sum:Real; //сумма вклада
+procent:Real; // процентная ставка
+period:Integer; //срок вклада
+dohod:Real;// доход по вкладу
+sum2:Real;// сумма при вычислении сложных процентов
+i:integer;  // запоминающая переменная
+begin   //действие для первой радиокнопки
+    sum:=StrToFloat(Vvod1.Text);
+    procent:=strtofloat(Vvod2.Text);
+    period:=StrToInt(Spisocheck.Text);
+    if Prprocent.Checked then
+    dohod:=sum*(1+procent/100/12)*period else
+begin   //действие для второй радиокнопки
+    sum2:=sum;
+    for i:=1 to period do
+    sum2:=sum+sum2*(1+procent/100/12);
+    dohod:=sum2-sum;
+end;
+    sum:=sum+dohod;
+    Vuvod.Caption:='Доход: '+floattostrF(dohod,ffCurrency,6,2)+#13+'Сумма в конце срока вклада: '+floattostrF(sum,ffcurrency,6,2)
+end;
